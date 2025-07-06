@@ -207,18 +207,6 @@ wayne-industries-system/
 - ✅ Responsividade
 - ✅ Funcionalidade offline
 
-## 🚀 Deploy e Produção
-
-### Hospedagem Recomendada
-- **Vercel**: Deploy automático e CDN global
-- **Netlify**: Integração com Git e builds automáticos
-- **GitHub Pages**: Hospedagem gratuita para projetos estáticos
-
-### Configurações de Produção
-1. Minificação de JavaScript
-2. Otimização de imagens
-3. Configuração de HTTPS
-4. Headers de segurança
 
 ## 📈 Melhorias Futuras
 
