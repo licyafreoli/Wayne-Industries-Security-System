@@ -258,7 +258,7 @@ wayne-industries-system/
 ### Contato
 - **Email**: suporte@wayneindustries.com
 - **Telefone**: (11) 9999-9999
-- **Documentação**: [Link para documentação completa]
+- **Documentação**: [linkherehaha]
 
 ### Issues
 - Reporte bugs através do GitHub Issues
