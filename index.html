@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayne Industries - Sistema de Segurança</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+    <div id="loading-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-pulse mb-4">
+                <i class="fas fa-shield-alt text-6xl text-yellow-400"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-yellow-400 mb-4">WAYNE INDUSTRIES</h1>
+            <div class="w-10 h-10 border-4 border-gray-600 border-t-yellow-400 rounded-full animate-spin"></div>
+        </div>
+    </div>
+
+    <div id="login-page" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800 hidden">
+        <div class="max-w-md w-full space-y-8 p-8">
+            <div class="text-center">
+                <i class="fas fa-shield-alt text-6xl text-yellow-400 mb-4"></i>
+                <h2 class="text-3xl font-bold text-yellow-400">WAYNE INDUSTRIES</h2>
+                <p class="mt-2 text-gray-400">Sistema de Segurança Avançado</p>
+            </div>
+            
+            <form id="login-form" class="mt-8 space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="username" class="sr-only">Usuário</label>
+                        <input id="username" name="username" type="text" required 
+                               class="relative block w-full px-3 py-2 border border-gray-600 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-yellow-400 focus:border-yellow-400"
+                               placeholder="Usuário">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Senha</label>
+                        <input id="password" name="password" type="password" required
+                               class="relative block w-full px-3 py-2 border border-gray-600 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-yellow-400 focus:border-yellow-400"
+                               placeholder="Senha">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Acessar Sistema
+                    </button>
+                </div>
+
+                <div class="text-center text-sm text-gray-400">
+                    <p>Usuários de teste:</p>
+                    <p><strong>admin</strong> / senha123 (Administrador)</p>
+                    <p><strong>manager</strong> / senha123 (Gerente)</p>
+                    <p><strong>employee</strong> / senha123 (Funcionário)</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="main-app" class="hidden">
+        <nav class="bg-black border-b border-yellow-400">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-2xl text-yellow-400 mr-3"></i>
+                        <span class="text-xl font-bold text-yellow-400">WAYNE INDUSTRIES</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span id="user-info" class="text-gray-300"></span>
+                        <button id="logout-btn" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="flex">
+            <aside class="w-64 bg-gray-800 min-h-screen">
+                <nav class="mt-5 px-2">
+                    <a href="#" class="nav-link flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors mb-1 bg-gray-700 text-yellow-400" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt mr-3 text-lg"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors mb-1" data-page="security">
+                        <i class="fas fa-shield-alt mr-3 text-lg"></i>
+                        <span>Controle de Acesso</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors mb-1" data-page="resources">
+                        <i class="fas fa-boxes mr-3 text-lg"></i>
+                        <span>Gestão de Recursos</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors mb-1" data-page="reports">
+                        <i class="fas fa-chart-bar mr-3 text-lg"></i>
+                        <span>Relatórios</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="flex-1 p-6">
+                <div id="dashboard-page" class="page-content">
+                    <h1 class="text-3xl font-bold text-yellow-400 mb-6">Dashboard de Segurança</h1>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-500 bg-opacity-20">
+                                    <i class="fas fa-users text-green-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Usuários Ativos</p>
+                                    <p class="text-2xl font-bold text-white" id="active-users">127</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-500 bg-opacity-20">
+                                    <i class="fas fa-boxes text-blue-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Recursos Totais</p>
+                                    <p class="text-2xl font-bold text-white" id="total-resources">1,247</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-500 bg-opacity-20">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Alertas Ativos</p>
+                                    <p class="text-2xl font-bold text-white" id="active-alerts">3</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-500 bg-opacity-20">
+                                    <i class="fas fa-shield-alt text-red-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Nível de Segurança</p>
+                                    <p class="text-2xl font-bold text-white">ALTO</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-white">Acessos por Hora</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                                    <span class="text-xs text-gray-400">Tempo Real</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Informações resumidas antes do gráfico -->
+                            <div class="mb-4 grid grid-cols-3 gap-4 text-center">
+                                <div class="bg-gray-700 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-400">Pico Atual</p>
+                                    <p class="text-lg font-bold text-yellow-400" id="peak-access">42</p>
+                                    <p class="text-xs text-gray-500">14:00h</p>
+                                </div>
+                                <div class="bg-gray-700 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-400">Média/Hora</p>
+                                    <p class="text-lg font-bold text-blue-400" id="avg-access">28</p>
+                                    <p class="text-xs text-gray-500">Hoje</p>
+                                </div>
+                                <div class="bg-gray-700 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-400">Total 24h</p>
+                                    <p class="text-lg font-bold text-green-400" id="total-access">672</p>
+                                    <p class="text-xs text-gray-500">Acessos</p>
+                                </div>
+                            </div>
+                            
+                            <div class="h-72">
+                                <canvas id="accessChart" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-white">Recursos por Categoria</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                                    <span class="text-xs text-gray-400">Atualizado</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Informações resumidas antes do gráfico -->
+                            <div class="mb-4 space-y-3">
+                                <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                        <span class="text-sm text-white">Equipamentos</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-lg font-bold text-white" id="equipment-count">45</span>
+                                        <span class="text-xs text-gray-400 ml-1">unidades</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                                        <span class="text-sm text-white">Veículos</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-lg font-bold text-white" id="vehicle-count">25</span>
+                                        <span class="text-xs text-gray-400 ml-1">unidades</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+                                        <span class="text-sm text-white">Dispositivos de Segurança</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-lg font-bold text-white" id="security-count">30</span>
+                                        <span class="text-xs text-gray-400 ml-1">unidades</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="h-72">
+                                <canvas id="resourceChart" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="security-page" class="page-content hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-yellow-400">Controle de Acesso</h1>
+                        <button id="add-user-btn" class="bg-yellow-400 text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">
+                            <i class="fas fa-plus mr-2"></i>Adicionar Usuário
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-900">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Usuário</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tipo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Último Acesso</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body" class="bg-gray-800 divide-y divide-gray-700">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="resources-page" class="page-content hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-yellow-400">Gestão de Recursos</h1>
+                        <button id="add-resource-btn" class="bg-yellow-400 text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">
+                            <i class="fas fa-plus mr-2"></i>Adicionar Recurso
+                        </button>
+                    </div>
+
+                    <div class="mb-6">
+                        <select id="resource-filter" class="bg-gray-800 border border-gray-600 text-white px-3 py-2 rounded-lg">
+                            <option value="">Todos os Recursos</option>
+                            <option value="equipamento">Equipamentos</option>
+                            <option value="veiculo">Veículos</option>
+                            <option value="seguranca">Dispositivos de Segurança</option>
+                        </select>
+                    </div>
+
+                    <div id="resources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                </div>
+
+                <div id="reports-page" class="page-content hidden">
+                    <h1 class="text-3xl font-bold text-yellow-400 mb-6">Relatórios de Segurança</h1>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <h3 class="text-lg font-semibold text-white mb-4">Atividades Recentes</h3>
+                            <div id="recent-activities" class="space-y-3">
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                            <h3 class="text-lg font-semibold text-white mb-4">Alertas de Segurança</h3>
+                            <div id="security-alerts" class="space-y-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="user-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-gray-800 p-6 rounded-lg w-full max-w-md">
+            <h3 class="text-lg font-semibold text-white mb-4">Adicionar Usuário</h3>
+            <form id="user-form">
+                <div class="space-y-4">
+                    <input type="text" id="user-name" placeholder="Nome" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                    <input type="text" id="user-username" placeholder="Usuário" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                    <select id="user-type" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                        <option value="employee">Funcionário</option>
+                        <option value="manager">Gerente</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-user" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="resource-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-gray-800 p-6 rounded-lg w-full max-w-md">
+            <h3 class="text-lg font-semibold text-white mb-4">Adicionar Recurso</h3>
+            <form id="resource-form">
+                <div class="space-y-4">
+                    <input type="text" id="resource-name" placeholder="Nome do Recurso" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                    <select id="resource-type" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                        <option value="equipamento">Equipamento</option>
+                        <option value="veiculo">Veículo</option>
+                        <option value="seguranca">Dispositivo de Segurança</option>
+                    </select>
+                    <input type="text" id="resource-location" placeholder="Localização" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                    <select id="resource-status" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                        <option value="ativo">Ativo</option>
+                        <option value="manutencao">Em Manutenção</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-resource" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/dashboard.js"></script>
+    <script src="./assets/js/security.js"></script>
+    <script src="./assets/js/resources.js"></script>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>

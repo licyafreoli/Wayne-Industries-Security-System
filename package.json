@@ -1,0 +1,21 @@
+{
+    "name": "wayne-industries-system",
+    "version": "1.0.0",
+    "description": "Sistema de Gerenciamento de Segurança das Indústrias Wayne",
+    "main": "index.html",
+    "scripts": {
+      "start": "npx http-server . -p 3000 -o",
+      "dev": "npx live-server --port=3000",
+      "build": "echo 'Build completed - No build process needed for vanilla JS'",
+      "test": "echo 'No tests specified'"
+    },
+    "keywords": ["security", "management", "dashboard", "wayne-industries", "tailwind"],
+    "author": "Wayne Industries Development Team",
+    "license": "MIT",
+    "devDependencies": {
+      "http-server": "^14.1.1",
+      "live-server": "^1.2.2"
+    },
+    "dependencies": {}
+  }
+  
